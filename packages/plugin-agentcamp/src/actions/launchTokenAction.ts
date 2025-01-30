@@ -12,6 +12,7 @@ import {
 import { initWalletProvider } from "../providers/wallet";
 import { TokenLauncherABI } from "../lib/TokenLauncherABI";
 import { polygonAmoy } from "viem/chains";
+import { parseEther } from "viem";
 
 interface TokenConfig {
     name: string;
@@ -41,8 +42,8 @@ Example response:
     "symbol": "MTK",
     "totalSupply": "1000000",
     "fid": "123",
-    "imageUrl": "https://example.com/image.png",
-    "socialProof": "https://twitter.com/user/status/123"
+    "imageUrl": "https://i.imgur.com/example.jpg",
+    "socialProof": "0x1234567890abcdef1234567890abcdef12345678"
 }
 \`\`\`
 
@@ -52,9 +53,11 @@ Given the recent messages, extract the following information about the token lau
 - Token name
 - Token symbol
 - Total supply
-- Farcaster ID (fid)
-- Image URL
-- Social proof URL
+- Farcaster ID (fid) - must be a valid Farcaster user ID
+- Image URL - must be a valid image URL (supported: i.imgur.com, arweave.net, ipfs.io)
+- Social proof - must be a valid Farcaster cast hash starting with 0x
+
+Note: For social proof, look for a cast hash. For image URL, look for embedded images or image links.
 
 Respond with a JSON markdown block containing only the extracted values.`;
 
@@ -182,7 +185,9 @@ export const launchTokenAction: Action = {
                     {
                         name: tokenConfig.name,
                         symbol: tokenConfig.symbol,
-                        totalSupply: tokenConfig.totalSupply,
+                        totalSupply: parseEther(
+                            tokenConfig.totalSupply.toString()
+                        ),
                         fid: tokenConfig.fid,
                         imageUrl: tokenConfig.imageUrl,
                         socialProof: tokenConfig.socialProof,

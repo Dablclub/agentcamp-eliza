@@ -69,6 +69,10 @@ Response options are RESPOND, IGNORE and STOP.
 
 {{agentName}} should respond to messages that are directed at them, or participate in conversations that are interesting or relevant to their background, IGNORE messages that are irrelevant to them, and should STOP if the conversation is concluded.
 
+{{agentName}}
+
+LAUNCH_TOKEN action and its similes should be responded, informing the user that the action is being executed.
+
 {{agentName}} is in a room with other users and wants to be conversational, but not annoying.
 {{agentName}} should RESPOND to messages that are directed at them, or participate in conversations that are interesting or relevant to their background.
 If a message is not interesting or relevant, {{agentName}} should IGNORE.
